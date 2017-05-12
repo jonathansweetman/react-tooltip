@@ -1,8 +1,22 @@
 import _ from 'lodash'
 import React, { Component, PropTypes } from 'react'
 import Popper from 'popper.js'
-
+import PopperUtils from 'popper.js/dist/popper-utils.js'
 import Portal from './portal'
+
+var _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+
+            for (var key in source) {
+                if (Object.prototype.hasOwnProperty.call(source, key)) {
+                    target[key] = source[key];
+                }
+            }
+        }
+
+        return target;
+    };
 
 const initialArrowProps = {
   left: 0,
@@ -68,7 +82,42 @@ class PortalPopper extends Component {
       content: this.props.title,
       placement: this.props.placement,
       modifiers: {
-        applyStyle: { enabled: true },
+        applyStyle: {
+          enabled: true,
+          fn: (data, options) => {
+              let styles = {
+                  position: data.offsets.popper.position
+              };
+
+              let attributes = {
+                  'x-placement': data.placement
+              };
+
+              let left = Math.round(data.offsets.popper.left);
+              let top = Math.round(data.offsets.popper.top);
+
+              let prefixedProperty = PopperUtils.getSupportedPropertyName('transform');
+              if (options.gpuAcceleration && prefixedProperty) {
+                  styles[prefixedProperty] = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
+                  styles.top = `${window.scrollY * -1}px`;
+                  styles.left = `${window.scrollX * -1}px`;
+                  styles.willChange = 'transform';
+              } else {
+                  styles.left = left - window.scrollX;
+                  styles.top = top - window.scrollY;
+                  styles.willChange = 'top, left';
+              }
+
+              PopperUtils.setStyles(data.instance.popper, _extends({}, styles, data.styles));
+              PopperUtils.setAttributes(data.instance.popper, _extends({}, attributes, data.attributes));
+
+              if (data.offsets.arrow) {
+                  PopperUtils.setStyles(data.arrowElement, data.offsets.arrow);
+              }
+
+              return data;
+          }
+        },
         arrow: { element: this.refs.arrow },
       },
     })
