@@ -1,7 +1,7 @@
 {
-  "name": "@cypress/react-tooltip",
+  "name": "@jsweetman/react-tooltip",
   "version": "0.2.2",
-  "description": "A tooltip component for React apps",
+  "description": "A tooltip component forked from https://github.com/cypress-io/react-tooltip",
   "main": "dist/tooltip.js",
   "scripts": {
     "build-dev": "node ./scripts/build-dev.js",
@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cypress-io/react-tooltip.git"
+    "url": "git+https://github.com/jonathansweetman/react-tooltip.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cypress-io/react-tooltip/issues"
+    "url": "https://github.com/jonathansweetman/react-tooltip/issues"
   },
-  "homepage": "https://github.com/cypress-io/react-tooltip#readme",
+  "homepage": "https://github.com/jonathansweetman/react-tooltip#readme",
   "files": [
     "dist"
   ],
