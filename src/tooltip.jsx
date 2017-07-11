@@ -31,6 +31,7 @@ class Tooltip extends Component {
     const actionProps = this.props.visible == null ? {
       onMouseOver: () => this.setState({ shouldShow: true }),
       onMouseOut: () => this.setState({ shouldShow: false }),
+      onWheel: () => this.setState({ shouldShow: false }),
     } : {}
 
     return (
