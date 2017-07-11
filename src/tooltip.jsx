@@ -9,12 +9,14 @@ class Tooltip extends Component {
     visible: PropTypes.bool,
     className: PropTypes.string,
     wrapperClassName: PropTypes.string,
+    ignoreScroll: PropTypes.bool  
   }
 
   static defaultProps = {
     placement: 'top',
     className: 'tooltip',
     wrapperClassName: '',
+    ignoreScroll: false  
   }
 
   constructor (...props) {
@@ -52,6 +54,7 @@ class Tooltip extends Component {
         placement={this.props.placement}
         className={this.props.className}
         wrapperClassName={this.props.wrapperClassName}
+        ignoreScroll={this.props.ignoreScroll}
       />
     )
   }

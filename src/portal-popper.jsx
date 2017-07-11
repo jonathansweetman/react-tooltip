@@ -36,6 +36,7 @@ class PortalPopper extends Component {
     title: PropTypes.string.isRequired,
     className: PropTypes.string,
     wrapperClassName: PropTypes.string,
+    ignoreScroll: PropTypes.bool
   }
 
   static defaultProps = {
@@ -99,12 +100,22 @@ class PortalPopper extends Component {
               let prefixedProperty = PopperUtils.getSupportedPropertyName('transform');
               if (options.gpuAcceleration && prefixedProperty) {
                   styles[prefixedProperty] = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
-                  styles.top = `${window.scrollY * -1}px`;
-                  styles.left = `${window.scrollX * -1}px`;
+                  if (this.props.ignoreScroll) {
+                      styles.top = `${window.scrollY * -1}px`;
+                      styles.left = `${window.scrollX * -1}px`;
+                  } else {
+                      styles.top = 0;
+                      styles.left = 0;
+                  }
                   styles.willChange = 'transform';
               } else {
-                  styles.left = left - window.scrollX;
-                  styles.top = top - window.scrollY;
+                  if (this.props.ignoreScroll) {
+                      styles.left = left - window.scrollX;
+                      styles.top = top - window.scrollY;
+                  } else {
+                      styles.top = top;
+                      styles.left = left;
+                  }
                   styles.willChange = 'top, left';
               }
 
