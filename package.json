@@ -1,6 +1,6 @@
 {
   "name": "jsweetman-react-tooltip",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A tooltip component forked from https://github.com/cypress-io/react-tooltip",
   "main": "dist/tooltip.js",
   "scripts": {
@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "lodash": "^4.0.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react": ">=0.14",
+    "react-dom": ">=0.14"
   }
 }
