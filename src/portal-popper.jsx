@@ -1,8 +1,9 @@
 import _ from 'lodash'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import Popper from 'popper.js'
 import PopperUtils from 'popper.js/dist/popper-utils.js'
 import Portal from './portal'
+import PropTypes from 'prop-types'
 
 var _extends = Object.assign || function (target) {
         for (var i = 1; i < arguments.length; i++) {

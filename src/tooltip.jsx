@@ -1,4 +1,5 @@
-import React, { Children, cloneElement, Component, PropTypes } from 'react'
+import React, { Children, cloneElement, Component } from 'react'
+import PropTypes from 'prop-types'
 
 import PortalPopper from './portal-popper'
 
@@ -9,7 +10,7 @@ class Tooltip extends Component {
     visible: PropTypes.bool,
     className: PropTypes.string,
     wrapperClassName: PropTypes.string,
-    ignoreScroll: PropTypes.bool  
+    ignoreScroll: PropTypes.bool
   }
 
   static defaultProps = {
