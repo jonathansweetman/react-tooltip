@@ -68,10 +68,8 @@ class PortalPopper extends Component {
       return ReactDOM.createPortal(<div
           id={`portal-${this.portalId}`}
           ref='popper'
-          className={`${className} ${prefix}-${placement}`}
-          style={this._getPortalStyle()}
       >
-          <div ref={(node) => this.domNode = node} className={`${className}`} style={this._getPopperStyle()}>
+          <div ref={(node) => this.domNode = node} className={`${className} ${prefix}-${placement}`} style={this._getPopperStyle()}>
               <span className={wrapperClassName}>{title}</span>
               <div
                   ref='arrow'
