@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { render } from 'react-dom'
+import ReactDOM, { render } from 'react-dom'
 
 class Portal extends Component {
   componentDidMount () {
@@ -28,7 +28,10 @@ class Portal extends Component {
   }
 
   render () {
-    return null
+    return ReactDOM.createPortal(
+        <div ref={(node) => this.domNode = node} {..._.omit(this.props, 'children')}>
+        {this.props.children}
+    </div>, document.body);
   }
 }
 

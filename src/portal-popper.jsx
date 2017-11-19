@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import Popper from 'popper.js'
 import PopperUtils from 'popper.js/dist/popper-utils.js'
 import Portal from './portal'
@@ -29,6 +30,7 @@ const initialPopperProps = {
   position: 'absolute',
   top: 0,
 }
+Portal.idNum = 0
 
 class PortalPopper extends Component {
   static propTypes = {
@@ -55,32 +57,37 @@ class PortalPopper extends Component {
     }
   }
 
+    componentWillMount() {
+      this.portalId = Portal.idNum++;
+    }
+
   render () {
     const { className, placement, title, wrapperClassName } = this.props
     const prefix = _.last(className.split(' '))
 
-    return (
-      <Portal
-        ref='popper'
-        className={`${className} ${prefix}-${placement}`}
-        style={this._getPopperStyle()}
+      return ReactDOM.createPortal(<div
+          id={`portal-${this.portalId}`}
+          ref='popper'
+          className={`${className} ${prefix}-${placement}`}
+          style={this._getPortalStyle()}
       >
-        <span className={wrapperClassName}>{title}</span>
-        <div
-          ref='arrow'
-          className={`${prefix}-arrow`}
-          style={this._getArrowStyle()}
-        >
-          <svg xmlns='http://www.w3.org/2000/svg' version='1.1'>
-            <polygon points='5,0 10,5 5,10 0,5' />
-          </svg>
+          <div ref={(node) => this.domNode = node} className={`${className}`} style={this._getPopperStyle()}>
+              <span className={wrapperClassName}>{title}</span>
+              <div
+                  ref='arrow'
+                  className={`${prefix}-arrow`}
+                  style={this._getArrowStyle()}
+              >
+                  <svg xmlns='http://www.w3.org/2000/svg' version='1.1'>
+                      <polygon points='5,0 10,5 5,10 0,5' />
+                  </svg>
+              </div>
           </div>
-      </Portal>
-    )
+      </div>, document.body)
   }
 
   componentDidMount () {
-    this.popper = new this.props.Popper(this.props.getTargetNode(), this.refs.popper.domNode, {
+    this.popper = new this.props.Popper(this.props.getTargetNode(), this.domNode, {
       content: this.props.title,
       placement: this.props.placement,
       modifiers: {
@@ -157,6 +164,13 @@ class PortalPopper extends Component {
       WebkitTransform: transform,
     }
   }
+
+    _getPortalStyle () {
+        return {
+            backgroundColor: 'transparent',
+            border: 'none'
+        }
+    }
 
   _getArrowStyle () {
     const left = _.isNumber(this.state.arrowProps.left) ? Math.round(this.state.arrowProps.left) : null
